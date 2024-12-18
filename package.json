@@ -1,0 +1,10 @@
+{
+  "devDependencies": {
+    "daisyui": "^4.12.22"
+  },
+  "dependencies": {
+    "@rails/actiontext": "^8.0.100",
+    "tailwindcss": "^3.4.17",
+    "trix": "^2.1.11"
+  }
+}

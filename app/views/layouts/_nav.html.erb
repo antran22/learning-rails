@@ -1,0 +1,58 @@
+<div class="drawer">
+  <input id="my-drawer-3" type="checkbox" class="drawer-toggle"/>
+  <div class="drawer-content flex flex-col">
+    <nav class="navbar bg-base-100">
+      <div class="navbar-start">
+        <label for="my-drawer-3" aria-label="open sidebar" class="btn btn-ghost btn-sm btn-square lg:hidden">
+          <iconify-icon icon="ph:list" class="size-4"></iconify-icon>
+        </label>
+        <a class="btn btn-ghost text-xl">daisyUI</a>
+      </div>
+      <div class="navbar-center hidden lg:flex">
+        <ul class="menu menu-horizontal px-1 gap-2">
+          <% nav_links.each do |nav_link| %>
+            <% nav_link_active = current_page? nav_link.slice(:controller, :action) %>
+            <li>
+              <% if nav_link[:submenu].nil? %>
+                <%=
+                  link_to nav_link[:name],
+                          nav_link.slice(:controller, :action),
+                          class: nav_link_active ? "active" : nil
+                %>
+              <% else %>
+                <details>
+                  <%= tag.summary nav_link[:name], class: nav_link_active ? (tw "bg-base-200") : nil %>
+                  <ul class="p-2 menu menu-vertical w-40">
+                    <% nav_link[:submenu].each do |sub_nav_link| %>
+                      <li>
+                        <%=
+                          link_to sub_nav_link[:name],
+                                  sub_nav_link.slice(:controller, :action),
+                                  class: (current_page? sub_nav_link.slice(:controller, :action)) ? "active" : nil
+                        %>
+                      </li>
+                    <% end %>
+                  </ul>
+                </details>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+      <div class="navbar-end">
+        <a class="btn btn-md">Login</a>
+      </div>
+    </nav>
+
+    <%= yield %>
+  </div>
+
+  <div class="drawer-side">
+    <label for="my-drawer-3" aria-label="close sidebar" class="drawer-overlay"></label>
+    <ul class="menu bg-base-200 min-h-full w-80 p-4">
+      <!-- Sidebar content here -->
+      <li><a>Sidebar Item 1</a></li>
+      <li><a>Sidebar Item 2</a></li>
+    </ul>
+  </div>
+</div>
