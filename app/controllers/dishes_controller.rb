@@ -1,5 +1,6 @@
 class DishesController < ApplicationController
-  before_action :set_dish, only: %i[ show edit update destroy ]
+  allow_unauthenticated_access only: %i[index show]
+  before_action :set_dish, only: %i[show edit update destroy]
 
   # GET /dishes or /dishes.json
   def index
@@ -25,7 +26,9 @@ class DishesController < ApplicationController
 
     respond_to do |format|
       if @dish.save
-        format.html { redirect_to @dish, notice: "Dish was successfully created." }
+        format.html do
+          redirect_to @dish, notice: "Dish was successfully created."
+        end
         format.json { render :show, status: :created, location: @dish }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +41,9 @@ class DishesController < ApplicationController
   def update
     respond_to do |format|
       if @dish.update(dish_params)
-        format.html { redirect_to @dish, notice: "Dish was successfully updated." }
+        format.html do
+          redirect_to @dish, notice: "Dish was successfully updated."
+        end
         format.json { render :show, status: :ok, location: @dish }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,7 +57,11 @@ class DishesController < ApplicationController
     @dish.destroy!
 
     respond_to do |format|
-      format.html { redirect_to dishes_path, status: :see_other, notice: "Dish was successfully destroyed." }
+      format.html do
+        redirect_to dishes_path,
+                    status: :see_other,
+                    notice: "Dish was successfully destroyed."
+      end
       format.json { head :no_content }
     end
   end
@@ -66,6 +75,6 @@ class DishesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def dish_params
-    params.fetch(:dish, {})
+    params.require(:dish).permit(:name, :image, :description)
   end
 end

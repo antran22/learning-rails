@@ -8,3 +8,12 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+iconify-icon > svg {
+  width: 100%;
+  height: 100%;
+}
+
+iconify-icon {
+  display: inline-block;
+}

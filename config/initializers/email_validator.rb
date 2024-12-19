@@ -1,3 +1,1 @@
-if defined?(EmailValidator)
-  EmailValidator.default_options[:mode] = :rfc
-end
+EmailValidator.default_options[:mode] = :rfc if defined?(EmailValidator)

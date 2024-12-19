@@ -51,11 +51,18 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  gem "rails-controller-testing", "~> 1.0"
 end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+  gem "hotwire-livereload", "~> 1.4"
+  gem "prettier_print", "~> 1.2"
+  gem "syntax_tree", "~> 6.2"
+  gem "syntax_tree-haml", "~> 4.0"
+  gem "syntax_tree-rbs", "~> 1.0"
 end
 
 group :test do
@@ -65,6 +72,5 @@ group :test do
 end
 
 gem "email_validator"
-
-gem "hotwire-livereload", "~> 1.4", :group => :development
 gem "redis"
+gem "mutex_m", "~> 0.3.0"

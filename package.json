@@ -1,10 +1,22 @@
 {
+  "scripts": {
+    "prettier": "prettier -w **/*"
+  },
   "devDependencies": {
-    "daisyui": "^4.12.22"
+    "@prettier/plugin-ruby": "^4.0.4",
+    "daisyui": "^4.12.22",
+    "prettier": "^3.4.2"
   },
   "dependencies": {
     "@rails/actiontext": "^8.0.100",
     "tailwindcss": "^3.4.17",
     "trix": "^2.1.11"
+  },
+  "prettier": {
+    "plugins": [
+      "@prettier/plugin-ruby"
+    ],
+    "tabWidth": 2,
+    "rubySingleQuote": false
   }
 }

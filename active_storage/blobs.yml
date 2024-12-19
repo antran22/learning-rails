@@ -1,0 +1,2 @@
+dish_image_1_blob:
+  <%= ActiveStorage::FixtureSet.blob filename: "image-1.png", service_name: "test_fixtures" %>

@@ -1,4 +1,6 @@
 class Dish < ApplicationRecord
-  has_many_attached :images
+  include ActionText::Attachable
+
+  has_one_attached :image
   has_rich_text :description
 end

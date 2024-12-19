@@ -1,9 +1,7 @@
 require "application_system_test_case"
 
 class DishesTest < ApplicationSystemTestCase
-  setup do
-    @dish = dishes(:one)
-  end
+  setup { @dish = dishes(:chung_cake) }
 
   test "visiting the index" do
     visit dishes_url

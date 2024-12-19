@@ -4,25 +4,26 @@
     <nav class="navbar bg-base-100">
       <div class="navbar-start">
         <label for="my-drawer-3" aria-label="open sidebar" class="btn btn-ghost btn-sm btn-square lg:hidden">
-          <iconify-icon icon="ph:list" class="size-4"></iconify-icon>
+          <iconify-icon icon="ph:list" width="1rem"></iconify-icon>
         </label>
-        <a class="btn btn-ghost text-xl">daisyUI</a>
+        <a class="btn btn-ghost text-xl">What2Eat</a>
       </div>
       <div class="navbar-center hidden lg:flex">
         <ul class="menu menu-horizontal px-1 gap-2">
           <% nav_links.each do |nav_link| %>
-            <% nav_link_active = current_page? nav_link.slice(:controller, :action) %>
             <li>
               <% if nav_link[:submenu].nil? %>
+                <% nav_link_active = current_page? nav_link.slice(:controller, :action) %>
                 <%=
                   link_to nav_link[:name],
                           nav_link.slice(:controller, :action),
                           class: nav_link_active ? "active" : nil
                 %>
               <% else %>
-                <details>
-                  <%= tag.summary nav_link[:name], class: nav_link_active ? (tw "bg-base-200") : nil %>
-                  <ul class="p-2 menu menu-vertical w-40">
+                <div class="dropdown dropdown-bottom <%= (tw "bg-base-200") if controller_name == nav_link[:controller].to_s %>"
+                     tabindex=0 role="button">
+                  <div><%= nav_link[:name] %></div>
+                  <ul class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow ms-0 mt-1">
                     <% nav_link[:submenu].each do |sub_nav_link| %>
                       <li>
                         <%=
@@ -33,14 +34,18 @@
                       </li>
                     <% end %>
                   </ul>
-                </details>
+                </div>
               <% end %>
             </li>
           <% end %>
         </ul>
       </div>
       <div class="navbar-end">
-        <a class="btn btn-md">Login</a>
+        <% if authenticated? %>
+          <%= render "layouts/user_menu" %>
+        <% else %>
+          <a class="btn btn-md" href="<%= login_url %>">Login</a>
+        <% end %>
       </div>
     </nav>
 

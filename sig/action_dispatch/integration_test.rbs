@@ -1,0 +1,5 @@
+module ActionDispatch
+  class IntegrationTest
+    def lorem_ipsum: -> string
+  end
+end

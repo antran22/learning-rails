@@ -1,8 +1,12 @@
 class AuthenticationController < ApplicationController
-  allow_unauthenticated_access
-  rate_limit to: 10, within: 3.minutes, only: %i[ login signup ], with: -> { redirect_to login_path, alert: "Try again later." }
+  allow_unauthenticated_access except: %i[logout]
+  rate_limit to: 10,
+             within: 3.minutes,
+             only: %i[login signup],
+             with: -> { redirect_to login_path, alert: "Try again later." }
 
   def login_page
+    redirect_to root_path if authenticated?
   end
 
   def login
@@ -10,7 +14,9 @@ class AuthenticationController < ApplicationController
       start_new_session_for user
       redirect_to after_authentication_url
     else
-      redirect_to login_path, alert: "Try another email address or password."
+      render "login_page",
+             alert: "Try another email address or password.",
+             status: :unprocessable_content
     end
   end
 
@@ -20,6 +26,7 @@ class AuthenticationController < ApplicationController
   end
 
   def signup_page
+    return redirect_to root_path if authenticated?
     @user = User.new
   end
 
@@ -29,13 +36,18 @@ class AuthenticationController < ApplicationController
       start_new_session_for @user
       redirect_to root_path, notice: "Successfully signed up!"
     else
-      render :new
+      render :signup_page, status: :unprocessable_content
     end
   end
 
   private
 
   def user_params
-    params.require(:user).permit(:email_address, :password, :password_confirmation)
+    params.require(:user).permit(
+      :name,
+      :email_address,
+      :password,
+      :password_confirmation
+    )
   end
 end
