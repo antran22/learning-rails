@@ -1,0 +1,45 @@
+<% def define_sub_nav_links(nav_link) %>
+  <% nav_link[:submenu].each do |sub_nav_link| %>
+    <% unless sub_nav_link[:admin] and not admin? %>
+      <li>
+        <%=
+          link_to sub_nav_link[:name],
+                  sub_nav_link.slice(:controller, :action),
+                  class: (current_page? sub_nav_link.slice(:controller, :action)) ? "active" : nil
+        %>
+      </li>
+    <% end %>
+  <% end %>
+<% end %>
+
+<ul class="menu lg:menu-horizontal px-1 gap-2">
+  <% nav_links.each do |nav_link| %>
+    <li>
+      <% if nav_link[:submenu].nil? %>
+        <% nav_link_active = current_page? nav_link.slice(:controller, :action) %>
+        <%=
+          link_to nav_link[:name],
+                  nav_link.slice(:controller, :action),
+                  class: nav_link_active ? "active" : nil
+        %>
+      <% else %>
+        <%# For Sidebar  %>
+        <details class="lg:hidden" name="nav-link-sections">
+          <summary><%= nav_link[:name] %></summary>
+          <ul>
+            <% define_sub_nav_links nav_link %>
+          </ul>
+        </details>
+
+        <%# For Header Nav%>
+        <div class="hidden lg:block dropdown dropdown-bottom <%= (tw "bg-base-200") if controller_name == nav_link[:controller].to_s %>"
+             tabindex=0 role="button">
+          <div><%= nav_link[:name] %></div>
+          <ul class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow ms-0 left-0 mt-1">
+            <% define_sub_nav_links nav_link %>
+          </ul>
+        </div>
+      <% end %>
+    </li>
+  <% end %>
+</ul>

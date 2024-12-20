@@ -14,7 +14,12 @@ module ApplicationHelper
         controller: :dishes,
         submenu: [
           { name: "Browse dishes", controller: :dishes, action: :index },
-          { name: "Submit dishes", controller: :dishes, action: :new }
+          {
+            name: "Submit dishes",
+            controller: :dishes,
+            action: :new,
+            # admin: true
+          }
         ]
       },
       {
@@ -26,7 +31,12 @@ module ApplicationHelper
             controller: :restaurants,
             action: :index
           },
-          { name: "Submit restaurants", controller: :restaurants, action: :new }
+          {
+            name: "Submit restaurants",
+            controller: :restaurants,
+            action: :new,
+            admin: true
+          }
         ]
       }
     ]

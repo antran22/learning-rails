@@ -1,5 +1,5 @@
 <div class="drawer">
-  <input id="my-drawer-3" type="checkbox" class="drawer-toggle"/>
+  <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
   <div class="drawer-content flex flex-col">
     <nav class="navbar bg-base-100">
       <div class="navbar-start">
@@ -9,36 +9,7 @@
         <a class="btn btn-ghost text-xl">What2Eat</a>
       </div>
       <div class="navbar-center hidden lg:flex">
-        <ul class="menu menu-horizontal px-1 gap-2">
-          <% nav_links.each do |nav_link| %>
-            <li>
-              <% if nav_link[:submenu].nil? %>
-                <% nav_link_active = current_page? nav_link.slice(:controller, :action) %>
-                <%=
-                  link_to nav_link[:name],
-                          nav_link.slice(:controller, :action),
-                          class: nav_link_active ? "active" : nil
-                %>
-              <% else %>
-                <div class="dropdown dropdown-bottom <%= (tw "bg-base-200") if controller_name == nav_link[:controller].to_s %>"
-                     tabindex=0 role="button">
-                  <div><%= nav_link[:name] %></div>
-                  <ul class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow ms-0 mt-1">
-                    <% nav_link[:submenu].each do |sub_nav_link| %>
-                      <li>
-                        <%=
-                          link_to sub_nav_link[:name],
-                                  sub_nav_link.slice(:controller, :action),
-                                  class: (current_page? sub_nav_link.slice(:controller, :action)) ? "active" : nil
-                        %>
-                      </li>
-                    <% end %>
-                  </ul>
-                </div>
-              <% end %>
-            </li>
-          <% end %>
-        </ul>
+        <%= render "layouts/nav_links" %>
       </div>
       <div class="navbar-end">
         <% if authenticated? %>
@@ -55,9 +26,7 @@
   <div class="drawer-side">
     <label for="my-drawer-3" aria-label="close sidebar" class="drawer-overlay"></label>
     <ul class="menu bg-base-200 min-h-full w-80 p-4">
-      <!-- Sidebar content here -->
-      <li><a>Sidebar Item 1</a></li>
-      <li><a>Sidebar Item 2</a></li>
+      <%= render "layouts/nav_links", assigns: { sidebar: true } %>
     </ul>
   </div>
 </div>

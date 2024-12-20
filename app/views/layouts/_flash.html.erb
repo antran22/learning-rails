@@ -1,7 +1,37 @@
-<% if (alert = flash[:alert]) %>
-  <p class="py-2 px-3 bg-error mb-5 text-error-content font-medium rounded-lg inline-block" id="alert"><%= alert %></p>
-<% end %>
+<% flash_class_mapping = {
+  alert: "warning",
+  error: "error",
+  notice: "success"
+} %>
 
-<% if (notice = flash[:notice]) %>
-  <p class="py-2 px-3 bg-success mb-5 text-error-content font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+
+<% flash_icon_mapping = {
+  alert: "ph:warning-octagon",
+  error: "ph:x-circle",
+  notice: "ph:check-circle"
+} %>
+
+<%# this is here so tailwind can pick up all the dynamic classes for flash types
+  bg-error text-error-content bg-warning text-warning-content bg-success text-success-content
+%>
+
+<% if flash.present? %>
+  <div class="fixed bottom-8 right-2 flex flex-col-reverse gap-2">
+    <% flash.each do |flash_type, message| %>
+      <% message_type = flash_class_mapping[flash_type.to_sym] %>
+      <% icon = flash_icon_mapping[flash_type.to_sym] %>
+      <div
+        class="py-2 px-4 bg-<%= message_type %> text-<%= message_type %>-content
+        font-medium text-sm rounded-lg animate-in slide-in-from-right slide-out-to-right inline-flex flex-row items-center gap-2 "
+        data-controller="close"
+      >
+        <iconify-icon icon="<%= icon %>" width="1rem" class="text-<%= message_type %>-content"></iconify-icon>
+        <%= message %>
+
+        <button class="btn btn-xs btn-circle btn-ghost ms-auto" data-action="click->close#close">
+          <iconify-icon icon="ph:x"></iconify-icon>
+        </button>
+      </div>
+    <% end %>
+  </div>
 <% end %>

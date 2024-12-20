@@ -22,12 +22,13 @@
   <%= stylesheet_link_tag "application", "data-turbo-track": Rails.env.production? ? "reload" : "" %>
   <%= javascript_importmap_tags %>
   <%= hotwire_livereload_tags if Rails.env.development? %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
 </head>
 
 <body>
 <%= render "layouts/nav" do %>
-  <main class="container mx-auto mt-28 px-5 flex">
-    <div class="mx-auto md:w-2/3 w-full">
+  <main class="container mx-auto mt-4 px-5 flex">
+    <div class="mx-auto max-w-screen-xl w-full">
       <%= render "layouts/flash" %>
       <%= yield %>
     </div>

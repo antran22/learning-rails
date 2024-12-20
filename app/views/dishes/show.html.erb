@@ -1,19 +1,17 @@
-<div class="mx-auto md:w-2/3 w-full flex">
-  <div class="mx-auto">
-    <h1 class="font-bold text-4xl"><%= @dish.name %></h1>
+<h1 class="font-bold text-4xl"><%= @dish.name %></h1>
 
-    <%= image_tag @dish.image if @dish.image.attached? %>
+<%= (image_tag @dish.image, class: "") if @dish.image.attached? %>
 
-    <div class="mt-4">
-      <strong class="block font-medium mb-1">Description:</strong>
-      <%= @dish.description %>
-    </div>
-
-
-    <%= link_to "Edit this dish", edit_dish_path(@dish), class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <%= link_to "Back to dishes", dishes_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <div class="inline-block ml-2">
-      <%= button_to "Destroy this dish", @dish, method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium" %>
-    </div>
-  </div>
+<div class="mt-4">
+  <strong class="block font-medium mb-1">Description:</strong>
+  <%= @dish.description %>
 </div>
+
+
+<%= link_to "Edit this dish", edit_dish_path(@dish), class: "btn btn-primary" %>
+<%= link_to "Back to dishes", dishes_path, class: "btn btn-neutral" %>
+<div class="inline-block ml-2">
+  <%= button_to "Destroy this dish", @dish, method: :delete, class: "btn btn-error" %>
+</div>
+
+

@@ -3,7 +3,7 @@ module Authentication
 
   included do
     before_action :require_authentication
-    helper_method :authenticated?
+    helper_method :authenticated?, :admin?, :require_admin?
   end
 
   class_methods do
@@ -14,8 +14,17 @@ module Authentication
 
   private
 
+  def admin?
+    resume_session.user.admin?
+  end
+
   def authenticated?
     resume_session
+  end
+
+  def require_admin
+    require_authentication
+    redirect_back_or_to root_url, alert: "You are not allowed to access this page" unless admin?
   end
 
   def require_authentication
@@ -46,13 +55,13 @@ module Authentication
       .sessions
       .create!(user_agent: request.user_agent, ip_address: request.remote_ip)
       .tap do |session|
-        Current.session = session
-        cookies.signed.permanent[:session_id] = {
-          value: session.id,
-          httponly: true,
-          same_site: :lax
-        }
-      end
+      Current.session = session
+      cookies.signed.permanent[:session_id] = {
+        value: session.id,
+        httponly: true,
+        same_site: :lax
+      }
+    end
   end
 
   def terminate_session

@@ -2,8 +2,10 @@
   <% content_for :title, "Dishes" %>
 
   <div class="flex justify-between items-center">
-    <h1 class="font-bold text-4xl">Dishes</h1>
-    <%= link_to "New dish", new_dish_path, class: "btn btn-primary" %>
+    <h1 class="font-bold text-4xl">Browse dishes</h1>
+    <% if admin? %>
+      <%= link_to "New dish", new_dish_path, class: "btn btn-primary" %>
+    <% end %>
   </div>
 
   <div id="dishes" class="min-w-full grid grid-flow-row grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
