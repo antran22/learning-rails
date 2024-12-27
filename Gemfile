@@ -58,7 +58,7 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
-  gem "hotwire-livereload", "~> 1.4"
+  gem "hotwire-livereload", "~> 2.0"
   gem "prettier_print", "~> 1.2"
   gem "syntax_tree", "~> 6.2"
   gem "syntax_tree-haml", "~> 4.0"
